@@ -2,7 +2,8 @@ import Link from 'next/link'
 import { headers } from 'next/headers'
 import { auth } from '@/lib/auth'
 import { isBarber } from '@/lib/config'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { SiteLogo } from '@/components/site-logo'
 import { MotionReveal } from '@/components/motion-reveal'
 import { Scissors, CalendarDays, Clock3, ShieldCheck, ArrowRight, Sparkles } from 'lucide-react'
@@ -20,8 +21,8 @@ export default async function HomePage() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8">
           <SiteLogo />
           <nav className="flex items-center gap-2">
-            {!loggedIn && <Button asChild variant="ghost" size="sm"><Link href="/sign-in">Entrar</Link></Button>}
-            <Button asChild size="sm"><Link href={primaryHref}>{barber ? 'Painel Nuno' : 'Agendar'}</Link></Button>
+            {!loggedIn && <Link className={buttonVariants({ variant: 'ghost', size: 'sm' })} href="/sign-in">Entrar</Link>}
+            <Link className={buttonVariants({ size: 'sm' })} href={primaryHref}>{barber ? 'Painel Nuno' : 'Agendar'}</Link>
           </nav>
         </div>
       </header>
@@ -43,8 +44,8 @@ export default async function HomePage() {
                 Agende seu corte com o Nuno em poucos segundos. Escolha o dia, veja somente os horários realmente disponíveis e confirme sua reserva.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Button asChild size="lg" className="h-12 px-6"><Link href={primaryHref}>{primaryLabel}<ArrowRight className="size-4"/></Link></Button>
-                {!loggedIn && <Button asChild variant="outline" size="lg" className="h-12 border-white/15 bg-white/5 px-6"><Link href="/sign-in">Já sou cliente</Link></Button>}
+                <Link className={cn(buttonVariants({ size: 'lg' }), 'h-12 px-6')} href={primaryHref}>{primaryLabel}<ArrowRight className="size-4"/></Link>
+                {!loggedIn && <Link className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'h-12 border-white/15 bg-white/5 px-6')} href="/sign-in">Já sou cliente</Link>}
               </div>
               <div className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-xs uppercase tracking-[.15em] text-white/45">
                 <span className="flex items-center gap-2"><Clock3 className="size-4 text-primary"/>Intervalos de 45 min</span>

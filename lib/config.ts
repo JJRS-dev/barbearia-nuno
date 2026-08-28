@@ -1,6 +1,6 @@
 // E-mail que identifica o barbeiro (Nuno). A conta cadastrada com este e-mail
 // tem acesso ao painel do barbeiro. Todas as outras contas são clientes.
-export const BARBER_EMAIL = 'nuno@nunexcortes.com'
+export const BARBER_EMAIL = (process.env.BARBER_EMAIL ?? 'nuno@nunexcortes.com').toLowerCase()
 
 export const BARBERSHOP_NAME = 'Nunex Cortes'
 export const BARBER_NAME = 'Nuno'
