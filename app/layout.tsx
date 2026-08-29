@@ -7,11 +7,47 @@ import './globals.css'
 const oswald = Oswald({ subsets: ['latin'], variable: '--font-sans' })
 const inter = Inter({ subsets: ['latin'], variable: '--font-serif' })
 
+const siteUrl = 'https://nunexbarber.fms.br'
+
 export const metadata: Metadata = {
-  title: 'Nunex Cortes | Barbearia do Nuno',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'Nunex Cortes | Barbearia do Nuno',
+    template: '%s | Nunex Cortes',
+  },
   description:
-    'Agende seu corte com o Nuno na Nunex Cortes. Escolha o dia, o horário e garanta seu visual.',
-  generator: 'v0.app',
+    'Agende seu corte com o Nuno na Nunex Cortes. Barbearia com agendamento online, horários disponíveis em tempo real e atendimento com hora marcada.',
+  keywords: [
+    'Nunex Cortes',
+    'Barbearia do Nuno',
+    'barbearia',
+    'agendamento barbearia',
+    'corte masculino',
+    'barbeiro Nuno',
+  ],
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    url: siteUrl,
+    siteName: 'Nunex Cortes',
+    title: 'Nunex Cortes | Barbearia do Nuno',
+    description:
+      'Agende seu corte com o Nuno online. Escolha o dia e o horário disponível e confirme sua reserva.',
+  },
 }
 
 export const viewport: Viewport = {
