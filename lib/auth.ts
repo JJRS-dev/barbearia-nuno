@@ -1,6 +1,16 @@
 import { betterAuth } from 'better-auth'
 import { pool } from '@/lib/db'
 
+const productionOrigins = [
+  'https://nunex-cortes.vercel.app',
+  'https://nunexbarber.fms.br',
+  ...(process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : []),
+  ...(process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? [`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`]
+    : []),
+  ...(process.env.BETTER_AUTH_URL ? [process.env.BETTER_AUTH_URL] : []),
+]
+
 export const auth = betterAuth({
   database: pool,
   baseURL:
@@ -24,26 +34,15 @@ export const auth = betterAuth({
           ...(process.env.V0_SANDBOX_URL ? [process.env.V0_SANDBOX_URL] : []),
         ]
       : []),
-    ...(process.env.NODE_ENV === 'production'
-      ? [
-          ...(process.env.VERCEL_URL
-            ? [`https://${process.env.VERCEL_URL}`]
-            : []),
-          ...(process.env.VERCEL_PROJECT_PRODUCTION_URL
-            ? [`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`]
-            : []),
-        ]
-      : []),
+    ...(process.env.NODE_ENV === 'production' ? productionOrigins : []),
   ],
   session: {
-    expiresIn: 60 * 60 * 24 * 7, // 7 dias
-    updateAge: 60 * 60 * 24, // 1 dia
+    expiresIn: 60 * 60 * 24 * 7,
+    updateAge: 60 * 60 * 24,
   },
   ...(process.env.NODE_ENV === 'development'
     ? {
         advanced: {
-          // No preview do v0 (iframe cross-site) forçamos cookies cross-site
-          // para que o cookie de sessão seja armazenado pelo navegador.
           defaultCookieAttributes: {
             sameSite: 'none' as const,
             secure: true,
