@@ -7,7 +7,7 @@ import './globals.css'
 const oswald = Oswald({ subsets: ['latin'], variable: '--font-sans' })
 const inter = Inter({ subsets: ['latin'], variable: '--font-serif' })
 
-const siteUrl = 'https://nunexbarber.fms.br'
+const siteUrl = 'https://nunex-cortes.vercel.app'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
