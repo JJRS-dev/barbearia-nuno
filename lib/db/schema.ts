@@ -18,6 +18,7 @@ export const user = pgTable('user', {
   email: text('email').notNull().unique(),
   emailVerified: boolean('emailVerified').notNull().default(false),
   image: text('image'),
+  isSubscriber: boolean('isSubscriber').notNull().default(false),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),
 })
@@ -70,18 +71,17 @@ export const verification = pgTable('verification', {
 })
 
 // --- App tables ------------------------------------------------------------
-// Cada linha é um horário criado pelo barbeiro.
-// status: 'open' (livre) | 'booked' (reservado) | 'blocked' (indisponível pelo Nuno)
-// Quando reservado, guardamos os dados do cliente para o barbeiro ver.
 export const appointment = pgTable('appointment', {
   id: serial('id').primaryKey(),
   slotDate: date('slotDate').notNull(),
   slotTime: text('slotTime').notNull(),
   status: text('status').notNull().default('open'),
   price: integer('price').notNull().default(0),
+  priorityOnly: boolean('priorityOnly').notNull().default(false),
   clientId: text('clientId'),
   clientName: text('clientName'),
   clientPhone: text('clientPhone'),
+  clientSubscriber: boolean('clientSubscriber').notNull().default(false),
   bookedAt: timestamp('bookedAt'),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
 })
