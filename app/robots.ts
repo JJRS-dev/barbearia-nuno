@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://nunexbarber.fms.br'
+  const baseUrl = 'https://nunex-cortes.vercel.app'
 
   return {
     rules: {
