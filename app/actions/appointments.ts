@@ -49,7 +49,7 @@ export async function openSlots(dateKey: string, times: string[], price: number)
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dateKey)) throw new Error('Data inválida')
   if (!Number.isFinite(price) || price < 0 || price > 100000) throw new Error('Valor inválido')
   if (!times.length) return { count: 0 }
-  const safePrice = Math.round(price * 100)
+  const safePrice = Math.round(price)
   const existing = await db.select({ slotTime: appointment.slotTime }).from(appointment).where(eq(appointment.slotDate, dateKey))
   const existingTimes = new Set(existing.map((row) => row.slotTime))
   const validTimes = [...new Set(times)].filter((time) => /^(?:[01]\d|2[0-3]):(?:00|15|30|45)$/.test(time))
@@ -82,7 +82,7 @@ export async function getMonthlyStats() {
   }).from(appointment).where(eq(appointment.status, 'booked'))
     .groupBy(sql`to_char(${appointment.slotDate}, 'YYYY-MM')`)
     .orderBy(sql`to_char(${appointment.slotDate}, 'YYYY-MM')`)
-  return rows.map((row) => ({ month: row.month, revenue: Number(row.revenue) / 100, cuts: Number(row.cuts) }))
+  return rows.map((row) => ({ month: row.month, revenue: Number(row.revenue), cuts: Number(row.cuts) }))
 }
 
 export async function getBarberOverview() {
