@@ -100,7 +100,7 @@ export function ClientBooking() {
           {slots.length ? (
             <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
               {slots.map((slot) => (
-                <button disabled={busy || (vip && weeklyUsed >= 2)} onClick={() => book(slot.id)} key={slot.id} className={`group rounded-2xl border p-4 text-left transition hover:-translate-y-0.5 hover:border-primary/45 disabled:cursor-not-allowed disabled:opacity-50 ${slot.priorityOnly ? 'border-primary/35 bg-primary/[.09]' : 'border-white/10 bg-card/60'}`}>
+                <button disabled={busy} onClick={() => book(slot.id)} key={slot.id} className={`group rounded-2xl border p-4 text-left transition hover:-translate-y-0.5 hover:border-primary/45 disabled:cursor-not-allowed disabled:opacity-50 ${slot.priorityOnly ? 'border-primary/35 bg-primary/[.09]' : 'border-white/10 bg-card/60'}`}>
                   {slot.priorityOnly ? <Crown className="mb-3 size-4 text-primary" /> : <Clock3 className="mb-3 size-4 text-primary" />}
                   <p className="font-sans text-xl font-bold">{slot.slotTime}</p>
                   <p className="mt-1 text-xs text-muted-foreground">{formatMoney(slot.price || 0)}</p>
@@ -116,7 +116,7 @@ export function ClientBooking() {
             </div>
           )}
 
-          {vip && weeklyUsed >= 2 && <p className="rounded-2xl border border-primary/25 bg-primary/[.06] p-4 text-sm text-primary">Você já utilizou os 2 cortes permitidos pelo Plano VIP nesta semana.</p>}
+          {vip && weeklyUsed >= 2 && <p className="rounded-2xl border border-primary/25 bg-primary/[.06] p-4 text-sm text-primary">Você já utilizou os 2 cortes permitidos pelo Plano VIP na semana atual. O limite de cada semana é conferido novamente ao reservar.</p>}
 
           {mine.length > 0 && (
             <div className="rounded-3xl border border-white/10 bg-card/40 p-5">
