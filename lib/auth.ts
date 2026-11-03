@@ -1,5 +1,6 @@
 import { betterAuth } from 'better-auth'
 import { pool } from '@/lib/db'
+import { BARBER_EMAIL } from '@/lib/config'
 
 const productionOrigins = [
   'https://nunex-cortes.vercel.app',
@@ -23,6 +24,20 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     autoSignIn: true,
+  },
+  // O e-mail reservado do barbeiro nunca pode ser reivindicado pelo cadastro
+  // público. A conta administrativa deve ser provisionada por um fluxo privado.
+  databaseHooks: {
+    user: {
+      create: {
+        before: async (newUser) => {
+          if (newUser.email.trim().toLowerCase() === BARBER_EMAIL) {
+            return false
+          }
+          return { data: newUser }
+        },
+      },
+    },
   },
   trustedOrigins: [
     ...(process.env.NODE_ENV === 'development'
